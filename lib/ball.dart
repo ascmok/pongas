@@ -14,12 +14,16 @@ Ball ({this.x, this.y});
     return Container(
       alignment: Alignment(x, y),
       child: Container(
-        width: 20,
+
+
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.blue,
+          color: Colors.blue,),
 
-        ),
+          width: 20,
+          height: 20,
+
+
       ),
     );
 

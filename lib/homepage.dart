@@ -1,39 +1,69 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:pongas/ball.dart';
+import 'package:pongas/gamestart.dart';
 import 'package:pongas/handle.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) :super (key: key);
+
   @override
-  Widget build(BuildContext context) {
+  _HomePageState createState () => _HomePageState();
+}
+  class _HomePageState extends State <HomePage> {
 
-    return Scaffold(
-      backgroundColor: Colors.yellow,
-      body: Center (
-        child: Stack (
-          children: [
-            // top handle
+    //ball variables
 
-            Handle(
-              x: 0, y:-0.9
-            ),
-            // bottom handle
-            Handle(
-              x: 0, y:0.9),
+    double ballX = 0;
+    double ballY = 0;
 
-            // ball
+    bool gameStarted = false;
 
-            Ball(
-              x: 0, y: 0,
-            )
+    void startGame () {
 
-
-          ],
-        ),
-      )
-    );
-
+    gameStarted = true;
+    Timer.periodic (Duration (milliseconds:25 ), (timer) {
+    setState(() {
+    ballY = ballY + 0.01;
+    });
+    });
   }
 
+@override
+Widget build(BuildContext context) {
+  return GestureDetector(
 
+      onTap: startGame,
+      child: Scaffold(
+          backgroundColor: Colors.yellow,
+          body: Center(
+            child: Stack(
+              children: [
+                //game start
+
+                GameStart (gameStarted: gameStarted,),
+
+                // top handle
+                Handle(
+                    x: 0, y: -0.9
+                ),
+                // bottom handle
+                Handle(
+                    x: 0, y: 0.9),
+
+                // ball
+
+                Ball(
+                  x: ballX, y: ballY,
+                )
+
+
+              ],
+            ),
+          ))
+  );
+}
 
 }
+
